@@ -6,6 +6,7 @@
     body {
       background-color: #FCC2D7;
       text-align: center;
+      position: relative;
     }
 
     h1 {
@@ -20,70 +21,46 @@
       margin-top: 50px;
     }
 
-    .button {
-      background-color: #FF0000;
-      color: #FFFFFF;
-      border: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      cursor: pointer;
-      border-radius: 8px;
-      margin-top: 30px;
-    }
-
-    .heart-container {
-      position: relative;
-      height: 200px;
+    /* Анимация падения сердец */
+    @keyframes falling-hearts {
+      0% {
+        transform: translateY(-100%);
+      }
+      100% {
+        transform: translateY(100%);
+      }
     }
 
     .heart {
       position: absolute;
       width: 20px;
       height: 20px;
-      background-color: #FF1493;
+      background-color: red;
       clip-path: url(#heartShape);
-      animation: fall 3s linear infinite;
-    }
-
-    .heart.red {
-      background-color: #FF0000;
-      animation-delay: 1s;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(0);
-      }
-      100% {
-        transform: translateY(500px);
-      }
+      animation: falling-hearts 3s linear infinite;
     }
   </style>
 </head>
 <body>
   <h1>Я тебя люблю</h1>
   <p>С любовью от Миши</p>
-  <div class="heart-container">
-    <div class="heart"></div>
-    <div class="heart red"></div>
-  </div>
-  <button class="button">Нажми на меня</button>
+  <p style="color: blue; font-size: 36px;">❤️с любовью от Миши❤️</p>
+  <!-- Падающие сердца -->
+  <div class="heart" style="top: 10%; left: 10%;"></div>
+  <div class="heart" style="top: 30%; left: 50%;"></div>
+  <div class="heart" style="top: 50%; left: 90%;"></div>
+  <!-- Добавьте больше сердец с разными позициями по желанию -->
 
-  <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="0" height="0">
+  <!-- Изображение "Love" -->
+  <img src="love.png" alt="Изображение Love" style="max-width: 100px; margin-top: 30px;">
+  
+  <!-- SVG-форма для сердца -->
+  <svg width="0" height="0">
     <defs>
-      <clipPath id="heartShape">
-        <path d="M25 1C15.925 1 9 7.925 9 17.625c0 8.173 8.9 17.177 14.318 23.415a2.455 2.455 0 0 0 3.364 0C22.1 34.802 31 25.798 31 17.625 31 7.925 24.075 1 15 1z"/>
+      <clipPath id="heartShape" clipPathUnits="objectBoundingBox">
+        <path d="M0.5 0 L0.9 0.4 L1 0.5 L0.5 0.9 L0 0.5 L0.1 0.4 Z"></path>
       </clipPath>
     </defs>
   </svg>
-
-  <script>
-    const button = document.querySelector(".button");
-    const heartContainer = document.querySelector(".heart-container");
-
-    button.addEventListener("click", () => {
-      heartContainer.style.visibility = "visible";
-    });
-  </script>
 </body>
 </html>
