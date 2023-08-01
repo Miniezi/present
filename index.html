@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html>
 <head>
   <title>Сайт-подарок для тебя</title>
@@ -7,6 +7,8 @@
     body {
       background-color: #FCC2D7;
       text-align: center;
+      margin: 0; /* Уберем отступы */
+      padding: 0; /* Уберем внутренние отступы */
       overflow: hidden; /* Скрыть содержимое, которое выходит за пределы экрана */
     }
 
@@ -35,6 +37,16 @@
       position: absolute;
       font-size: 30px;
       color: #FF1493;
+    }
+
+    /* Стили для текста комплиментов */
+    .compliment-text {
+      font-size: 20px;
+      font-weight: bold;
+      position: absolute;
+      top: -30px; /* Отступ от сердца вверх */
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     /* Цвета для каждого комплимента */
@@ -74,7 +86,12 @@
       newElement.className = 'falling-element ' + compliments[Math.floor(Math.random() * compliments.length)].class;
       newElement.style.left = Math.random() * 100 + 'vw';
       newElement.style.top = '-50px'; /* Начальная позиция комплимента за пределами экрана */
-      newElement.innerHTML = compliments[Math.floor(Math.random() * compliments.length)].text;
+
+      const complimentText = document.createElement('div');
+      complimentText.className = 'compliment-text';
+      complimentText.innerText = compliments[Math.floor(Math.random() * compliments.length)].text;
+      newElement.appendChild(complimentText);
+
       document.body.appendChild(newElement);
 
       // Плавная анимация падения элемента
