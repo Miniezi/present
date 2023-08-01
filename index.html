@@ -54,7 +54,11 @@
     }
 
     // Генерация сердец каждую секунду
-    setInterval(createHeart, 1000);
+    setInterval(function() {
+      createHeart();
+      createHeart();
+      createHeart();
+    }, 1000);
   </script>
 </body>
 </html>
