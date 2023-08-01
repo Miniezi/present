@@ -30,6 +30,13 @@
       cursor: grab; /* Изменение курсора для перетаскивания элемента */
     }
 
+    /* Стили для сердец */
+    .heart {
+      position: absolute;
+      font-size: 30px;
+      color: #FF1493;
+    }
+
     /* Цвета для каждого комплимента */
     .color1 { color: #FF1493; }
     .color2 { color: #00BFFF; }
@@ -129,9 +136,7 @@
     function createHeart() {
       const hearts = ['♥️', '❤️', '💕', '💘'];
       const heart = document.createElement('div');
-      heart.style.position = 'absolute';
-      heart.style.fontSize = '30px';
-      heart.style.color = '#FF1493';
+      heart.className = 'heart';
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.top = '-50px';
       heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
@@ -151,6 +156,12 @@
 
     // Генерация сердец каждую секунду
     setInterval(createHeart, 1000);
+
+    // Обработчик событий для предотвращения изменения перспективы сайта
+    window.addEventListener('scroll', (event) => {
+      window.scrollTo(0, 0);
+    });
+
   </script>
 </body>
 </html>
