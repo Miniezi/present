@@ -8,6 +8,7 @@
       background-color: #FCC2D7;
       text-align: center;
       position: relative;
+      overflow: hidden; /* Скрываем содержимое, выходящее за границы экрана */
     }
 
     h1 {
@@ -42,14 +43,8 @@
 <body>
   <h1>Я тебя люблю</h1>
   <p>С любовью от Миши</p>
-  <p style="color: blue; font-size: 28px;">❤️с любовью от Миши❤️</p>
-  <!-- Падающие сердца -->
-  <div class="heart" style="top: 10%; left: 10%;">❤️</div>
-  <div class="heart" style="top: 30%; left: 50%;">💕</div>
-  <div class="heart" style="top: 50%; left: 90%;">❤️</div>
-  <div class="heart" style="top: 20%; left: 70%;">❤️</div>
-  <div class="heart" style="top: 60%; left: 30%;">💕</div>
-  <!-- Добавленные положения сердец -->
+  <!-- Надпись на одной строке на всех мобильных устройствах -->
+  <p style="color: blue; font-size: 28px; white-space: nowrap;">❤️с любовью от Миши❤️</p>
 
   <!-- Изображение "Love" -->
   <img src="love.png" alt="Изображение Love" style="max-width: 100px; margin-top: 30px;">
