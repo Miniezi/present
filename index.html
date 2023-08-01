@@ -7,9 +7,9 @@
     body {
       background-color: #FCC2D7;
       text-align: center;
-      margin: 0; /* Уберем отступы */
-      padding: 0; /* Уберем внутренние отступы */
-      overflow: hidden; /* Скрыть содержимое, которое выходит за пределы экрана */
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
     }
 
     h1 {
@@ -29,7 +29,6 @@
     .falling-element {
       position: absolute;
       font-size: 30px;
-      cursor: grab; /* Изменение курсора для перетаскивания элемента */
     }
 
     /* Стили для сердец */
@@ -95,59 +94,19 @@
       document.body.appendChild(newElement);
 
       // Плавная анимация падения элемента
-      newElement.style.transition = 'top 6s linear';
+      newElement.style.transition = 'top 10s linear';
       newElement.style.top = window.innerHeight + 'px';
-
-      // Обработчик событий для перетаскивания комплиментов
-      let startOffset = 0;
-      let isDragging = false;
-
-      function handleDragStart(event) {
-        isDragging = true;
-        startOffset = event.clientY - newElement.offsetTop;
-        newElement.style.transition = 'none'; /* Отключение анимации падения при перетаскивании */
-        newElement.style.cursor = 'grabbing'; /* Изменение курсора при перетаскивании */
-      }
-
-      function handleDragEnd(event) {
-        isDragging = false;
-        newElement.style.transition = 'top 6s linear'; /* Восстановление анимации падения после перетаскивания */
-        newElement.style.cursor = 'grab';
-      }
-
-      function handleDrag(event) {
-        if (isDragging) {
-          const newY = event.clientY - startOffset;
-          // Ограничение движения комплимента внутри экрана
-          const maxY = window.innerHeight - newElement.offsetHeight;
-          newElement.style.top = Math.min(Math.max(newY, 0), maxY) + 'px';
-        }
-      }
-
-      newElement.addEventListener('mousedown', handleDragStart);
-      newElement.addEventListener('touchstart', (event) => {
-        handleDragStart(event.touches[0]);
-      });
-
-      document.addEventListener('mouseup', handleDragEnd);
-      document.addEventListener('touchend', handleDragEnd);
-      document.addEventListener('mousemove', handleDrag);
-      document.addEventListener('touchmove', (event) => {
-        if (isDragging) {
-          handleDrag(event.touches[0]);
-        }
-      });
 
       // Удаление элемента, когда он достигает конца экрана
       newElement.addEventListener('transitionend', () => {
-        if (newElement.offsetTop >= window.innerHeight) {
+        setTimeout(() => {
           newElement.remove();
-        }
+        }, 2000); // Удаляем элемент через 2 секунды после окончания анимации
       });
     }
 
-    // Генерация комплиментов каждую секунду
-    setInterval(createFallingElement, 1000);
+    // Генерация комплиментов каждые 2 секунды
+    setInterval(createFallingElement, 2000);
 
     // Скрипт для генерации сердец
     function createHeart() {
@@ -160,19 +119,19 @@
       document.body.appendChild(heart);
 
       // Плавная анимация падения сердца
-      heart.style.transition = 'top 6s linear';
+      heart.style.transition = 'top 10s linear';
       heart.style.top = window.innerHeight + 'px';
 
       // Удаление сердца, когда оно достигает конца экрана
       heart.addEventListener('transitionend', () => {
-        if (heart.offsetTop >= window.innerHeight) {
+        setTimeout(() => {
           heart.remove();
-        }
+        }, 2000); // Удаляем сердце через 2 секунды после окончания анимации
       });
     }
 
-    // Генерация сердец каждую секунду
-    setInterval(createHeart, 1000);
+    // Генерация сердец каждые 2 секунды
+    setInterval(createHeart, 2000);
 
     // Обработчик событий для предотвращения изменения перспективы сайта
     window.addEventListener('scroll', (event) => {
