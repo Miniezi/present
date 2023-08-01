@@ -26,9 +26,7 @@
     /* Стили для падения элементов */
     .falling-element {
       position: absolute;
-      font-size: 20px;
-      font-weight: bold; /* Жирный текст */
-      left: 0;
+      font-size: 30px;
       cursor: grab; /* Изменение курсора для перетаскивания элемента */
     }
 
@@ -53,6 +51,14 @@
     const compliments = [
       { text: 'Ты прекрасна как рассвет!', class: 'color1' },
       { text: 'Твоя улыбка - это солнце!', class: 'color2' },
+      { text: 'Ты сильная и умная!', class: 'color3' },
+      { text: 'Твои глаза словно звезды!', class: 'color4' },
+      { text: 'Ты умеешь вдохновлять!', class: 'color5' },
+      { text: 'Твоя доброта невероятна!', class: 'color1' },
+      { text: 'Ты - настоящая звезда!', class: 'color2' },
+      { text: 'Ты умеешь заражать энтузиазмом!', class: 'color3' },
+      { text: 'Ты лучше всех!', class: 'color4' },
+      { text: 'Ты заслуживаешь всего наилучшего!', class: 'color5' },
       // Добавьте еще комплиментов с цветами по вашему выбору
     ];
 
@@ -60,7 +66,7 @@
       const newElement = document.createElement('div');
       newElement.className = 'falling-element ' + compliments[Math.floor(Math.random() * compliments.length)].class;
       newElement.style.left = Math.random() * 100 + 'vw';
-      newElement.style.top = '0'; /* Начальная позиция комплимента вверху экрана */
+      newElement.style.top = '-50px'; /* Начальная позиция комплимента за пределами экрана */
       newElement.innerHTML = compliments[Math.floor(Math.random() * compliments.length)].text;
       document.body.appendChild(newElement);
 
@@ -69,43 +75,50 @@
       newElement.style.top = window.innerHeight + 'px';
 
       // Обработчик событий для перетаскивания комплиментов
-      let initialY = null;
-      let newY = null;
-      let yOffset = 0;
+      let startOffset = 0;
+      let isDragging = false;
 
       function handleDragStart(event) {
-        initialY = event.clientY;
-        newElement.style.cursor = 'grabbing'; /* Изменение курсора при перетаскивании */
+        isDragging = true;
+        startOffset = event.clientY - newElement.offsetTop;
         newElement.style.transition = 'none'; /* Отключение анимации падения при перетаскивании */
-        newY = parseInt(newElement.style.top, 10) || 0; /* Получение текущего значения "top" */
-        const computedStyle = window.getComputedStyle(newElement);
-        const borderTop = parseInt(computedStyle.borderTopWidth, 10) || 0;
-        yOffset = event.clientY - newElement.getBoundingClientRect().top - borderTop;
+        newElement.style.cursor = 'grabbing'; /* Изменение курсора при перетаскивании */
       }
 
       function handleDragEnd(event) {
+        isDragging = false;
         newElement.style.transition = 'top 6s linear'; /* Восстановление анимации падения после перетаскивания */
-        newElement.style.top = newY + 'px';
         newElement.style.cursor = 'grab';
       }
 
       function handleDrag(event) {
-        newY = event.clientY - yOffset;
-        // Ограничение движения комплимента внутри экрана
-        newY = Math.min(Math.max(newY, 0), window.innerHeight - newElement.offsetHeight);
-        newElement.style.top = newY + 'px';
+        if (isDragging) {
+          const newY = event.clientY - startOffset;
+          // Ограничение движения комплимента внутри экрана
+          const maxY = window.innerHeight - newElement.offsetHeight;
+          newElement.style.top = Math.min(Math.max(newY, 0), maxY) + 'px';
+        }
       }
 
-      newElement.addEventListener('mousedown', (event) => {
-        handleDragStart(event);
-        document.addEventListener('mousemove', handleDrag);
-        document.addEventListener('mouseup', handleDragEnd);
-      });
-
+      newElement.addEventListener('mousedown', handleDragStart);
       newElement.addEventListener('touchstart', (event) => {
         handleDragStart(event.touches[0]);
-        document.addEventListener('touchmove', handleDrag);
-        document.addEventListener('touchend', handleDragEnd);
+      });
+
+      document.addEventListener('mouseup', handleDragEnd);
+      document.addEventListener('touchend', handleDragEnd);
+      document.addEventListener('mousemove', handleDrag);
+      document.addEventListener('touchmove', (event) => {
+        if (isDragging) {
+          handleDrag(event.touches[0]);
+        }
+      });
+
+      // Удаление элемента, когда он достигает конца экрана
+      newElement.addEventListener('transitionend', () => {
+        if (newElement.offsetTop >= window.innerHeight) {
+          newElement.remove();
+        }
       });
     }
 
