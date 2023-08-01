@@ -51,7 +51,7 @@
     /* Цвета для каждого комплимента */
     .color1 { color: #FF1493; }
     .color2 { color: #00BFFF; }
-    .color3 { color: #FFD700; }
+    .color3 { color: #FFA500; } /* Изменим цвет на оранжевый */
     .color4 { color: #32CD32; }
     .color5 { color: #8A2BE2; }
     /* Добавьте еще цветов для комплиментов по вашему выбору */
@@ -97,12 +97,79 @@
       newElement.style.transition = 'top 10s linear';
       newElement.style.top = window.innerHeight + 'px';
 
+      // Обработчик событий для перетаскивания комплиментов
+      let startOffsetX = 0;
+      let startOffsetY = 0;
+      let isDragging = false;
+
+      function handleDragStart(event) {
+        isDragging = true;
+        startOffsetX = event.clientX - newElement.offsetLeft;
+        startOffsetY = event.clientY - newElement.offsetTop;
+        newElement.style.transition = 'none'; /* Отключение анимации падения при перетаскивании */
+        newElement.style.cursor = 'grabbing'; /* Изменение курсора при перетаскивании */
+      }
+
+      function handleDragEnd(event) {
+        isDragging = false;
+        newElement.style.transition = 'top 10s linear'; /* Восстановление анимации падения после перетаскивания */
+        newElement.style.cursor = 'grab';
+      }
+
+      function handleDrag(event) {
+        if (isDragging) {
+          const newX = event.clientX - startOffsetX;
+          const newY = event.clientY - startOffsetY;
+          // Ограничение движения комплимента внутри экрана
+          const maxX = window.innerWidth - newElement.offsetWidth;
+          const maxY = window.innerHeight - newElement.offsetHeight;
+          newElement.style.left = Math.min(Math.max(newX, 0), maxX) + 'px';
+          newElement.style.top = Math.min(Math.max(newY, 0), maxY) + 'px';
+        }
+      }
+
+      newElement.addEventListener('mousedown', handleDragStart);
+      newElement.addEventListener('touchstart', (event) => {
+        handleDragStart(event.touches[0]);
+      });
+
+      document.addEventListener('mouseup', handleDragEnd);
+      document.addEventListener('touchend', handleDragEnd);
+      document.addEventListener('mousemove', handleDrag);
+      document.addEventListener('touchmove', (event) => {
+        if (isDragging) {
+          handleDrag(event.touches[0]);
+        }
+      });
+
       // Удаление элемента, когда он достигает конца экрана
       newElement.addEventListener('transitionend', () => {
         setTimeout(() => {
           newElement.remove();
         }, 2000); // Удаляем элемент через 2 секунды после окончания анимации
       });
+
+      // Обработка коллизий комплиментов
+      const checkCollision = () => {
+        for (let i = 0; i < document.getElementsByClassName('falling-element').length; i++) {
+          const currentElement = document.getElementsByClassName('falling-element')[i];
+          if (currentElement !== newElement) {
+            const dx = newElement.offsetLeft - currentElement.offsetLeft;
+            const dy = newElement.offsetTop - currentElement.offsetTop;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 40) { /* Задайте значение, которое будет считаться коллизией */
+              newElement.style.transition = 'none'; /* Отключение анимации падения при коллизии */
+              newElement.style.left = newElement.offsetLeft + 10 + 'px';
+              newElement.style.top = newElement.offsetTop + 10 + 'px';
+              currentElement.style.transition = 'none'; /* Отключение анимации падения при коллизии */
+              currentElement.style.left = currentElement.offsetLeft - 10 + 'px';
+              currentElement.style.top = currentElement.offsetTop - 10 + 'px';
+            }
+          }
+        }
+      };
+
+      setInterval(checkCollision, 50);
     }
 
     // Генерация комплиментов каждые 2 секунды
