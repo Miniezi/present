@@ -38,6 +38,13 @@
       font-size: 20px;
       animation: falling-hearts 3s linear infinite;
     }
+
+    /* Стили для увеличения и выравнивания изображения */
+    .love-image {
+      max-width: 200px;
+      margin: 30px auto;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -46,22 +53,21 @@
   <!-- Надпись на одной строке на всех мобильных устройствах -->
   <p style="color: blue; font-size: 28px; white-space: nowrap;">❤️с любовью от Миши❤️</p>
 
-  <!-- Изображение "Love" -->
-  <img src="love.png" alt="Изображение Love" style="max-width: 100px; margin-top: 30px;">
+  <!-- Увеличенное изображение "Love" по середине -->
+  <img src="love.png" alt="Изображение Love" class="love-image">
 
   <!-- Скрипт для генерации новых падающих сердец -->
   <script>
-    setInterval(function() {
+    function createHeart() {
       const newHeart = document.createElement('div');
       newHeart.className = 'heart';
-      newHeart.style.top = Math.random() * 100 + '%';
+      newHeart.style.top = '0';
       newHeart.style.left = Math.random() * 100 + '%';
       newHeart.innerHTML = Math.random() < 0.5 ? '❤️' : '💕';
       document.body.appendChild(newHeart);
-      setTimeout(function() {
-        newHeart.remove();
-      }, 4000);
-    }, 1000);
+    }
+
+    setInterval(createHeart, 500);
   </script>
 </body>
 </html>
