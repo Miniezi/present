@@ -65,9 +65,13 @@
       newHeart.style.left = Math.random() * 100 + '%';
       newHeart.innerHTML = Math.random() < 0.5 ? '❤️' : '💕';
       document.body.appendChild(newHeart);
+
+      setTimeout(function() {
+        newHeart.remove();
+      }, 5000); /* Сердца будут исчезать через 5 секунд */
     }
 
-    setInterval(createHeart, 500);
+    setInterval(createHeart, 500); /* Генерация сердец каждые 0.5 секунды */
   </script>
 </body>
 </html>
