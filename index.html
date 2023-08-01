@@ -159,11 +159,12 @@
             const distance = Math.sqrt(dx * dx + dy * dy);
             if (distance < 40) { /* Задайте значение, которое будет считаться коллизией */
               newElement.style.transition = 'none'; /* Отключение анимации падения при коллизии */
-              newElement.style.left = newElement.offsetLeft + 10 + 'px';
-              newElement.style.top = newElement.offsetTop + 10 + 'px';
               currentElement.style.transition = 'none'; /* Отключение анимации падения при коллизии */
-              currentElement.style.left = currentElement.offsetLeft - 10 + 'px';
-              currentElement.style.top = currentElement.offsetTop - 10 + 'px';
+              // Отталкивание комплиментов в разные стороны при коллизии
+              newElement.style.left = newElement.offsetLeft + (Math.random() < 0.5 ? -10 : 10) + 'px';
+              newElement.style.top = newElement.offsetTop + (Math.random() < 0.5 ? -10 : 10) + 'px';
+              currentElement.style.left = currentElement.offsetLeft + (Math.random() < 0.5 ? -10 : 10) + 'px';
+              currentElement.style.top = currentElement.offsetTop + (Math.random() < 0.5 ? -10 : 10) + 'px';
             }
           }
         }
