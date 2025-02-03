@@ -1,102 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #ff1493;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-    }
-    
-    .card {
-      width: 80%;
-      max-width: 600px;
-      background-color: pink;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-      border-radius: 10px;
-      text-align: center;
-      position: relative;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    
-    .heart {
-      position: absolute;
-      font-size: 3em;
-      color: red;
-      animation: heartBeat 2s infinite;
-      opacity: 0;
-    }
-    
-    @keyframes heartBeat {
-      0% {
-        transform: scale(1);
-        opacity: 0;
-      }
-      20% {
-        transform: scale(1.3);
-        opacity: 1;
-      }
-      40% {
-        transform: scale(1);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 0;
-      }
-    }
-    
-    .wish {
-      position: absolute;
-      font-size: 2em;
-      color: #ffffff;
-      animation: scroll 10s linear infinite;
-      opacity: 0;
-      transform: translateX(-100%);
-    }
-    
-    @keyframes scroll {
-      0% {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
-      10% {
-        transform: translateX(0%);
-        opacity: 1;
-      }
-      90% {
-        transform: translateX(100%);
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Крестики-нолики</title>
 </head>
 <body>
-  <div class="card">
-    <h1>С днём рождения, моя любовь!</h1>
-    <p>
-      Я рад, что ты родилась и рад, что я могу быть рядом с тобой. Ты создаешь чудеса в моей жизни и я хочу, чтобы ты знала, что я всегда буду здесь, чтобы поддержать и любить тебя.
-    </p>
-    <p>
-      С днём рождения! Я надеюсь, что твой день будет наполнен всем, что тебя делает счастливой.
-    </p>
-    <div class="heart" style="top: 10%; left: 40%;">❤️</div>
-    <div class="heart" style="top: 50%; left: 10%;">❤️</div>
-    <div class="heart" style="top: 80%; right: 30%;">❤️</div>
-    <div class="wish" style="top: 30%; left: 0%;">Веселья и радости!</div>
-    <div class="wish" style="top: 70%; right: 0%;">улачи и счастья!</div>
-    <div class="wish" style="top: 50%; left: 0% ">Успехов во всем!</div>
-  </div></
-  
+    <div class="container">
+        <h1>Крестики-нолики</h1>
+        <div class="board" id="board"></div>
+        <button id="reset">Сбросить игру</button>
+        <p id="result"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
