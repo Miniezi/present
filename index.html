@@ -2,21 +2,27 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Тетрис: Исправленный запуск</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Тетрис: Полноэкранный режим</title>
     <style>
-        body {
+        html, body {
             margin: 0;
+            padding: 0;
             height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #1e3c72, #2a5298);
+            font-family: Arial, sans-serif;
+            color: white;
+            touch-action: none;
+        }
+        body {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(to bottom, #1e3c72, #2a5298);
-            font-family: Arial, sans-serif;
-            color: white;
-            overflow: hidden;
-            touch-action: none;
         }
         #gameContainer {
             display: flex;
@@ -48,6 +54,7 @@
             justify-content: center;
             width: 100%;
             max-width: 360px;
+            padding-bottom: 60px; /* Отступ снизу для панели */
         }
         button {
             width: 70px;
@@ -573,8 +580,8 @@
             pieceY = 0;
             gameOverScreen.style.display = 'none';
             statsDisplay.textContent = `Счёт: ${score} | Уровень: ${level} | Линий: ${linesCleared}`;
-            startMusic();
             draw();
+            startMusic();
         }
 
         function gameLoop(timestamp) {
